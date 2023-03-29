@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
     useDisclosure,
     Button,
@@ -15,17 +15,30 @@ import {useRecoilState} from "recoil"
 import { authModalState } from '@/src/atoms/authModalAtom';
 import AuthInputs from './AuthInputs';
 import OAuthButtons from './OAuthButtons';
+import { useAuthState } from 'react-firebase-hooks/auth';
+import { auth } from '@/src/firebase/clientApp';
 
 
 const AuthModal:React.FC = () => {
      const [modalState,setModalState] =useRecoilState(authModalState)
+     const[
+        user,
+        loading,
+        error
+     ] = useAuthState(auth);
 
      const handleClose = () =>{
         setModalState((prev) =>({
             ...prev,
             open: false,
         }))
-     }
+     };
+     
+     useEffect(() => {
+      if(user) handleClose();
+    
+     }, [user]);
+     
     return (
      <>
            
