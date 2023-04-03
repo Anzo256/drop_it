@@ -11,6 +11,7 @@ import {
     MenuOptionGroup,
     MenuDivider,
     Flex,
+    Text,
   } from '@chakra-ui/react'
 import { ChevronDownIcon } from '@chakra-ui/icons';
 import { signOut, User } from 'firebase/auth';
@@ -45,7 +46,26 @@ const UserMenu:React.FC<UserMenuProps> = ({user}) => {
         {user? (
         
             <>
-            <Icon fontSize={24} mr={1} color="gray.300" as={FaRedditSquare}/>
+            <Icon 
+            fontSize={24} 
+            mr={1} color="gray.300" 
+            as={FaRedditSquare}
+            />
+            <Flex
+            direction="column"
+            display={{ base:"none", lg:"flex"}}
+            fontSize="6pt"
+            align="flex-start"
+            mr={6}
+            >
+                <Text fontWeight={700}>
+                {user?.displayName || user.email?.split('0')[0]}
+                </Text>
+            <Flex>
+                <Icon as={IoSparkles} color="brand.100" mr={1}/>
+                <Text color="gray.400">1 karma</Text>
+            </Flex>    
+            </Flex>
             </>
         ) : (
             <Icon fontSize={24} color="gray.400" mr={1} as={VscAccount}/>
